@@ -1,0 +1,16 @@
+trigger ExerciseTrigger on Case (before update) {
+    //Este trigger agrega un Case relacionado para cada Case nuevo o actualizado.
+    Map<Id, Case> idsCasos = new Map<Id, Case>([SELECT Id, Description, (SELECT ID, CaseNumber FROM Cases ) FROM Case WHERE Id IN :Trigger.new]);
+    for (Case caso : Trigger.new) {
+        if(idsCasos.get(caso.ID).Cases.size()!=0){
+            String sumaCasos;
+            for (Case casito : idsCasos.get(caso.ID).Cases) {
+                sumaCasos = sumaCasos + casito.CaseNumber;
+            }
+            caso.Description = sumaCasos;
+        }else{
+            caso.Description='Caso sin hijos';
+        }
+}
+
+}

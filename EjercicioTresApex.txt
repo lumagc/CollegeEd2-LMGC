@@ -1,0 +1,17 @@
+@isTest
+public class ExerciseTriggerTest {
+	@testSetup
+    static void setup() {
+        Case caso = new Case();
+        insert caso;
+        Map<Id, Case> idsCasos = new Map<Id, Case>([SELECT Id, Description, (SELECT ID, CaseNumber FROM Cases ) FROM Case WHERE Id IN :Trigger.new]);
+        
+    }
+    
+    @isTest static void test(){
+        Test.startTest();
+        
+        Test.stopTest();
+        System.assertEquals();
+    }
+}
